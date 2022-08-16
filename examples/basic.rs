@@ -1,4 +1,4 @@
-use mlock::Mlock;
+use mlock::{Mlock, Value};
 
 fn generate_private_key() -> [u8; 32] {
     [0xFF; 32]
@@ -9,7 +9,7 @@ fn main() {
     let secrets = generate_private_key();
 
     // ..but we don't want them to be written to swap
-    let locked_secrets = Mlock::new(secrets).unwrap();
+    let locked_secrets = Mlock::new(Value::Raw(secrets)).unwrap();
 
     // ..so we lock them into the RAM and prevent them from getting swapped!
 
