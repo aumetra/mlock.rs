@@ -13,7 +13,7 @@ mod raw {
 
 pub fn mlock<T>(item: &Value<T>) -> io::Result<()> {
     let len = mem::size_of::<T>();
-    let ret_code = unsafe { raw::VirtualLock(item.as_ref() as *const T as *const c_void) };
+    let ret_code = unsafe { raw::VirtualLock(item.as_ref() as *const T as *const c_void, len) };
 
     if ret_code == 0 {
         Err(io::Error::last_os_error())
